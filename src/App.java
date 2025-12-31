@@ -14,6 +14,7 @@ public class App {
 			}
 		} while (!correcto);
 		int[] posiciones = new int[altura];
+		posiciones = inicializaTablero(posiciones, -1);
 		calculaPosiciones(posiciones, altura, 0);
     }
 
@@ -23,14 +24,15 @@ public class App {
 			return;
 		}
 		for (int col = 0; col < altura; col++) {
-			if (esSegura(posiciones, fila, col)) {
+			if (esValida(posiciones, fila, col)) {
 				posiciones[fila] = col; 
 				calculaPosiciones(posiciones, altura, fila + 1);
+				posiciones[fila] = -1;
 			}
 		}
 	}
 
-	public static boolean esSegura(int[] posiciones, int fila, int col) {
+	public static boolean esValida(int[] posiciones, int fila, int col) {
 		for (int pos = 0; pos < fila; pos++) {
 			if (posiciones[pos] == col)
 				return false;
@@ -38,6 +40,12 @@ public class App {
 				return false;
 		}
 		return true;
+	}
+
+	public static int[] inicializaTablero(int[] tablero, int valor) {
+		for (int i = 0; i < tablero.length; i++)
+			tablero[i] = valor;
+		return tablero;
 	}
 
 	public static void muestraPosiciones(int[] posiciones) {
